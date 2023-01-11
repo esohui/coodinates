@@ -2,10 +2,13 @@ body {
   background-color: black;
   margin: 0;
 }
+.canvas {
+  position: absolute;
+}
 .target {
   position: absolute;
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
 }
 .coordinates {
   color: white;

@@ -1,4 +1,7 @@
 const target = document.querySelector('.target');
+const targetRect = target.getBoundingClientRect();
+const targetHalfWidth = targetRect.width / 2;
+const targetHalfHeight = targetRect.height / 2;
 const canvas = document.querySelector('.canvas');
 const ctx = canvas.getContext('2d');
 const coordinates = document.querySelector('.coordinates');
@@ -12,12 +15,6 @@ function updateSize() {
 window.addEventListener('DOMContentLoaded', updateSize);
 window.addEventListener('resize', updateSize);
 
-// ---------------------------------------------------------
-
-function moveCursor(x, y) {
-  target.style.left = x - target.width / 2 + 'px';
-  target.style.top = y - target.height / 2 + 'px';
-}
 function drawLine(x, y) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.lineWidth = 1;
@@ -33,15 +30,13 @@ function drawLine(x, y) {
   ctx.lineTo(x, canvas.height);
   ctx.stroke();
 }
-function updateCoodinates(x, y) {
-  coordinates.innerHTML = `${x}px, ${y}px`;
-  coordinates.style.left = `${x + 15}px`;
-  coordinates.style.top = `${y + 15}px`;
-}
-window.addEventListener('mousemove', (e) => {
-  const x = e.clientX;
-  const y = e.clientY;
-  moveCursor(x, y);
-  drawLine(x, y);
-  updateCoodinates(x, y);
+addEventListener('load', () => {
+  window.addEventListener('mousemove', (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    target.style.transform = `translate(${x - targetHalfWidth}px, ${y - targetHalfHeight}px)`;
+    coordinates.innerHTML = `${x}px, ${y}px`;
+    coordinates.style.transform = `translate(${x + 20}px, ${y + 20}px)`;
+    drawLine(x, y);
+  });
 });
